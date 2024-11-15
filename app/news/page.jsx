@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import fetchData from '@/customhooks/fetchData';
+import Cards from '@/components/Cards';
 
 export default function News() {
     const [find, setFind] = useState('turismo');
@@ -58,19 +59,8 @@ export default function News() {
                             </div>
                         ) : (
                             currentItems &&
-                            currentItems.map((data) =>
-                                <div key={data.title} className="max-w-56 h-max bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                    <a href="#">
-                                        <img className="rounded-t-lg" src={data.urlToImage} alt="" />
-                                    </a>
-                                    <div className="p-3">
-                                        <a href="#">
-                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{data.title}</h5>
-                                        </a>
-                                        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{data.description}</p>
-                                        <h6 className='text-center text-black dark:text-white font-semibold'>{data.source.name}</h6>
-                                    </div>
-                                </div>
+                            currentItems.map((data, index) =>
+                                <Cards key={index} images={data} />
                             )
                         )}
 

@@ -1,4 +1,26 @@
+'use client'
+import fetchData from "@/customhooks/fetchData";
+import { useEffect, useState } from "react";
+
 export default function Home() {
+  const [headline, setHeadline] = useState();
+  const [loading, setLoading] = useState();
+
+  function getNews() {
+    const key = 'fda644f7a546441db48a3bbd3c0992c8';
+    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}`
+
+    setLoading(true);
+    fetchData(url)
+      .then(data => {
+        console.log(data); setHeadline(data.articles || [])
+      })
+      .catch(error => console.error('Error fetchind data: ', error))
+      .finally(() => setLoading(false));
+  }
+  useEffect(() => {
+    getNews()
+  }, [])
 
   return (
     <>
@@ -15,26 +37,24 @@ export default function Home() {
               {/* <!-- Carousel wrapper --> */}
               <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
                 {/* <!-- Item 1 --> */}
-                <div className="duration-700 ease-in-out" data-carousel-item>
-                  <img src="/images/img.webp" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-                  <div>
-                  </div>
+                <div className="hidden duration-700 ease-in-out" data-carousel-item>
+                  <img src="images/img.webp" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
                 </div>
                 {/* <!-- Item 2 --> */}
-                <div className=" duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-2.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+                <div className="hidden duration-700 ease-in-out" data-carousel-item>
+                  <img src="/docs/images/carousel/carousel-2.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
                 </div>
                 {/* <!-- Item 3 --> */}
-                <div className=" duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-3.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+                <div className="hidden duration-700 ease-in-out" data-carousel-item>
+                  <img src="/docs/images/carousel/carousel-3.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
                 </div>
                 {/* <!-- Item 4 --> */}
-                <div className=" duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-4.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+                <div className="hidden duration-700 ease-in-out" data-carousel-item>
+                  <img src="/docs/images/carousel/carousel-4.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
                 </div>
                 {/* <!-- Item 5 --> */}
-                <div className=" duration-700 ease-in-out" data-carousel-item>
-                  <img src="/docs/images/carousel/carousel-5.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+                <div className="hidden duration-700 ease-in-out" data-carousel-item>
+                  <img src="/docs/images/carousel/carousel-5.svg" className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..."/>
                 </div>
               </div>
               {/* <!-- Slider indicators --> */}
