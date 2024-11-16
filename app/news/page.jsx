@@ -60,7 +60,7 @@ export default function News() {
                         ) : (
                             currentItems &&
                             currentItems.map((data, index) =>
-                                <Cards key={index} images={data} />
+                               <Cards key={index} images={data} />
                             )
                         )}
 

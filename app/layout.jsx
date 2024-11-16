@@ -2,6 +2,8 @@ import NavBar from "@/components/NavBar";
 import "./globals.css";
 import { Poppins } from 'next/font/google'
 import Footer from "@/components/Footer";
+import { CardProvider } from "./context/CardContext";
+
 
 const poppins = Poppins({ subsets: ["latin"], weight: '400' });
 
@@ -17,7 +19,9 @@ export default function RootLayout({ children }) {
         className={`${poppins.className} antialiased`}
       >
         <NavBar />
-        {children}
+        <CardProvider>
+          {children}
+        </CardProvider>
         <Footer />
       </body>
 
