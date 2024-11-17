@@ -105,3 +105,24 @@ input:checked+.slider:before {
     stroke-dashoffset: -125px;
   }
 }
+
+.fondoT {
+  position: relative;
+}
+
+.fondoT::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Ocupa todo el contenedor */
+  background: rgba(255, 255, 255, 0.329);
+  /* Negro con 50% de opacidad */
+  z-index: 1;
+  /* Coloca la superposición debajo del texto */
+  border-radius: 13px;
+}
+.text {
+  position: relative;
+  /* Coloca el texto por encima de la superposición */
+  z-index: 2;
+}
