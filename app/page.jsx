@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import TopCards from "@/components/TopCards";
 
 export default function Home() {
   const [headline, setHeadline] = useState([]);
@@ -26,12 +27,13 @@ export default function Home() {
   }, [])
 
   const settings = {
-    dots:true,
+    dots: true,
     autoplay: true,
     autoplaySpeed: 2000,
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
   };
   return (
     <>
@@ -47,19 +49,7 @@ export default function Home() {
               {/* Top cards component */}
               {headline &&
                 headline.map((data, index) =>
-                  <div key={index} className="flex justify-center cursor-pointer gap-2">
-                    <div className="w-full sm:w-3/6 md:w-5/6 md:h-96 h-80">
-                      <div style={{ backgroundImage: `url(${data.urlToImage ? data.urlToImage : 'images/second.jpg'})` }} className="fondoT rounded-2xl active:bg-gray-700 bg-cover bg-center flex place-content-center h-full items-center">
-                        <div className="text flex flex-col px-1 sm:px-4 sm:gap-3 mb-1 mt-auto">
-                          <a href="#">
-                            <h5 className="mb-1 text-xl text-gray-900 sm:text-2xl font-bold tracking-tight">{data.title}</h5>
-                          </a>
-                          <p className="font-normal sm:text-lg">{data.description}</p>
-                          <h6 className='text-center font-semibold'>{data.source.name}</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <TopCards key={index} data={data} />
                 )}
             </Slider>
 
