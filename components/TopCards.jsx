@@ -15,7 +15,7 @@ export default function TopCards({ data: { urlToImage, title, description, sourc
     return (
         <>
             <div onClick={handleClick} className="flex justify-center cursor-pointer gap-2">
-                <div className="w-full md:h-96 h-80 sm:px-4">
+                <div className="w-full md:h-96 h-80 sm:px-4 mb-8 sm:mb-0">
                     <div style={{ backgroundImage: `url(${urlToImage ? urlToImage : 'images/second.jpg'})` }} className="fondoT rounded-2xl active:bg-gray-700 bg-cover bg-center flex place-content-center h-full items-center">
                         <div className="text flex flex-col px-1 sm:px-4 sm:gap-3 mb-1 mt-auto">
                             <a href="#">

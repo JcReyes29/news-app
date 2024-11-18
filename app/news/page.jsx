@@ -11,7 +11,7 @@ export default function News() {
     const itemsPage = 12;
 
     function getData() {
-        const key = 'fda644f7a546441db48a3bbd3c0992c8'
+        const key = 'd6eeb0aaf2b1470081d53cc53b414c4a'
         const url = `https://newsapi.org/v2/everything?q=${find}&apiKey=${key}`
 
         setLoading(true);
