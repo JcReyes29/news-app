@@ -5,14 +5,21 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import TopCards from "@/components/TopCards";
+import NavBar from "@/components/NavBar";
 
 export default function Home() {
   const [headline, setHeadline] = useState([]);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
+  const [source, setSource] = useState("");
 
   function getNews() {
     const key = 'd6eeb0aaf2b1470081d53cc53b414c4a';
-    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}`
+    let url = `https://newsapi.org/v2/top-headlines?apiKey=${key}`
+    if (source) {
+      url += `&sources=${source}`;
+    } else {
+      url += `&country=us`;
+    }
 
     setLoading(true);
     fetchData(url)
@@ -24,7 +31,7 @@ export default function Home() {
   }
   useEffect(() => {
     getNews()
-  }, [])
+  }, [source]);
 
   const settings = {
     dots: true,
@@ -37,6 +44,7 @@ export default function Home() {
   };
   return (
     <>
+      <NavBar setSource={setSource} />
       <section className="h-full dark:bg-gray-800">
         <div className="max-w-screen-lg mx-auto p-3 md:p-2 flex flex-col gap-10 md:gap-0">
           <div className="flex flex-col items-center mt-4 md:mt-8 gap-4 md:gap-8">

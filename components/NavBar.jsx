@@ -1,11 +1,13 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import fetchData from '@/customhooks/fetchData';
 
-export default function NavBar() {
+export default function NavBar({ setSource }) {
     const [darkMode, setDarkMode] = useState(false);
     const [openIdiom, setOpenIdiom] = useState(false);
     const [openFont, setOpenFont] = useState(false);
+    const [sources, setSources] = useState([]);
 
     useEffect(() => {
         if (darkMode) {
@@ -16,6 +18,19 @@ export default function NavBar() {
     }, [darkMode]);
 
     const handleToggle = () => setDarkMode(!darkMode);
+
+    useEffect(() => {
+        const key = 'd6eeb0aaf2b1470081d53cc53b414c4a';
+        const url = `https://newsapi.org/v2/top-headlines/sources?apiKey=${key}`
+
+        fetchData(url)
+            .then(data => setSources(data.sources || []))
+            .catch(error => console.error('error al obtener fuente:', error));
+    }, []);
+
+    const handleSource = ((e) => {
+        setSource(e.target.value);
+    })
 
     return (
         <>
@@ -51,58 +66,22 @@ export default function NavBar() {
                                     Busqueda
                                 </Link></button>
                         </div>
+                        <div className="relative inline-block text-left">
+                            <select
+                                onChange={handleSource
+                                }
+                                className="ml-2 px-2 py-1 rounded-md text-gray-900 w-28 sm:w-64 text-base dark:text-white dark:bg-gray-700 "
+                            >
+                                <option value="">Fuentes</option>
+                                {sources.map((source) => (
+                                    <option key={source.id} value={source.id}>
+                                        {source.name}
+                                    </option>
+                                ))}
+                            </select>
 
-
-                        <div className='flex gap-2'>
-                            <div className="relative inline-block text-left">
-                                <div>
-                                    <button onClick={() => setOpenIdiom(!openIdiom)} type="button" className="hover:bg-[#ff2323ea]  focus:bg-red-500 focus:text-white hover:text-white inline-flex w-16 sm:w-32 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                        Idioma
-                                        <svg className="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                            <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                {openIdiom && (
-                                    <div className="absolute right-0 z-10 mt-2 w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                        <div className="py-1" role="none">
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</a>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-1">Support</a>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-2">License</a>
-                                            <form method="POST" action="#" role="none">
-                                                <button type="submit" className="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                )}
-
-                            </div>
-                            <div className="relative inline-block text-left">
-                                <div>
-                                    <button onClick={() => setOpenFont(!openFont)} type="button" className="hover:bg-[#ff2323ea]  focus:bg-red-500 focus:text-white hover:text-white inline-flex w-16 sm:w-32 justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                        Fuente
-                                        <svg className="-mr-1 size-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                            <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                {openFont && (
-                                    <div className="absolute right-0 z-10 mt-2 w-28 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
-                                        <div className="py-1" role="none">
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-0">Account settings</a>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-1">Support</a>
-                                            <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-2">License</a>
-                                            <form method="POST" action="#" role="none">
-                                                <button type="submit" className="block w-full px-4 py-2 text-left text-sm text-gray-700" role="menuitem" tabIndex="-1" id="menu-item-3">Sign out</button>
-                                            </form>
-                                        </div>
-                                    </div>
-
-                                )}
-
-                            </div>
                         </div>
+
 
 
                     </div>

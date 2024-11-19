@@ -19,7 +19,6 @@ export default function RootLayout({ children }) {
         className={`${poppins.className} antialiased`}
       >
         <CardProvider>
-          <NavBar />
           {children}
           <Footer />
         </CardProvider>
