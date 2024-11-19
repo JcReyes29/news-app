@@ -15,7 +15,7 @@ export default function News() {
     let timeout;
 
     function getData(query) {
-        const key = 'd6eeb0aaf2b1470081d53cc53b414c4a'
+        const key = '882b56933df84223bedd6f484383e064'
         let url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${key}`
 
         if (source) {

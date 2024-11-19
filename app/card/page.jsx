@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import { useCard } from '../context/CardContext';
+import NavBar from '@/components/NavBar';
 
 export default function ViewCard() {
     const { cardData } = useCard();
@@ -12,6 +13,7 @@ export default function ViewCard() {
     const { urlToImage, title, description, author, content, publishedAt, url, source } = cardData;
     return (
         <>
+            <NavBar />
             <section className="h-full dark:bg-gray-800">
                 <div className="max-w-screen-lg mx-auto p-3 md:p-2 flex flex-col gap-10">
                     <div className='grid sm:flex gap-5 w-full justify-center h-full my-8 px-8'>

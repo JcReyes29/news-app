@@ -20,7 +20,7 @@ export default function NavBar({ setSource }) {
     const handleToggle = () => setDarkMode(!darkMode);
 
     useEffect(() => {
-        const key = 'd6eeb0aaf2b1470081d53cc53b414c4a';
+        const key = '882b56933df84223bedd6f484383e064';
         const url = `https://newsapi.org/v2/top-headlines/sources?apiKey=${key}`
 
         fetchData(url)

@@ -13,7 +13,7 @@ export default function Home() {
   const [source, setSource] = useState("");
 
   function getNews() {
-    const key = 'd6eeb0aaf2b1470081d53cc53b414c4a';
+    const key = '882b56933df84223bedd6f484383e064';
     let url = `https://newsapi.org/v2/top-headlines?apiKey=${key}`
     if (source) {
       url += `&sources=${source}`;
