@@ -10,9 +10,11 @@ export default function News() {
     const [loading, setLoading] = useState(false);
     const itemsPage = 12;
 
-    function getData() {
+    let timeout;
+
+    function getData(query) {
         const key = 'd6eeb0aaf2b1470081d53cc53b414c4a'
-        const url = `https://newsapi.org/v2/everything?q=${find}&apiKey=${key}`
+        const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${key}`
 
         setLoading(true);
         fetchData(url)
@@ -24,7 +26,7 @@ export default function News() {
 
     }
     useEffect(() => {
-        getData()
+        getData(find)
     }, [])
 
     // Paginación
@@ -35,6 +37,21 @@ export default function News() {
     // Actualizar pagina
     const updatePage = (pageNumber) => setCurrentPage(pageNumber);
 
+    const handleSearch = (e) => {
+        const query = e.target.value;
+        setFind(query);
+
+        clearTimeout(timeout);
+
+        timeout = setTimeout(() => {
+            if (query.trim()) {
+                getData(query);
+                setCurrentPage(1);
+
+            }
+        }, 500);
+    }
+
     return (
         <>
             <section className="h-full dark:bg-gray-800">
@@ -42,8 +59,8 @@ export default function News() {
                     <div className="flex flex-col items-center mt-4 md:mt-8 gap-4 md:gap-8">
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-center dark:text-white">¿Que quieres ver hoy?</h2>
                         <div className='flex border-2 border-gray-800 dark:bg-white rounded-3xl items-center justify-between py-0 px-2 w-full md:w-[425px] lg:w-[550px]'>
-                            <input onChange={(e) => setFind(e.target.value)} type='text' className='outline-none border-none rounded-l-3xl w-11/12 px-2 py-1' placeholder='Buscar en News App'></input>
-                            <button onClick={getData} className='py-2 px-3'>
+                            <input onChange={handleSearch} value={find} type='text' className='outline-none border-none rounded-l-3xl w-11/12 px-2 py-1' placeholder='Buscar en News App'></input>
+                            <button onClick={() => getData(find)} className='py-2 px-3'>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23" fill="currentColor" className="size-5 sm:size-6">
                                     <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
                                 </svg>
@@ -60,7 +77,7 @@ export default function News() {
                         ) : (
                             currentItems &&
                             currentItems.map((data, index) =>
-                               <Cards key={index} images={data} />
+                                <Cards key={index} images={data} />
                             )
                         )}
 

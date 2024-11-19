@@ -18,11 +18,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.className} antialiased`}
       >
-        <NavBar />
         <CardProvider>
+          <NavBar />
           {children}
+          <Footer />
         </CardProvider>
-        <Footer />
       </body>
 
     </html>
