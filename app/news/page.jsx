@@ -2,19 +2,25 @@
 import React, { useEffect, useState } from 'react'
 import fetchData from '@/customhooks/fetchData';
 import Cards from '@/components/Cards';
+import NavBar from '@/components/NavBar';
 
 export default function News() {
-    const [find, setFind] = useState('turismo');
+    const [find, setFind] = useState('Turismo');
     const [result, setResult] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [source, setSource] = useState("");
     const itemsPage = 12;
 
     let timeout;
 
     function getData(query) {
         const key = 'd6eeb0aaf2b1470081d53cc53b414c4a'
-        const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${key}`
+        let url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${key}`
+
+        if (source) {
+            url += `&sources=${source}`;
+        };
 
         setLoading(true);
         fetchData(url)
@@ -27,7 +33,7 @@ export default function News() {
     }
     useEffect(() => {
         getData(find)
-    }, [])
+    }, [source]);
 
     // Paginación
     const lastItem = currentPage * itemsPage;
@@ -54,12 +60,13 @@ export default function News() {
 
     return (
         <>
+            <NavBar setSource={setSource} />
             <section className="h-full dark:bg-gray-800">
                 <div className="max-w-screen-lg mx-auto p-3 md:p-2 flex flex-col gap-10">
                     <div className="flex flex-col items-center mt-4 md:mt-8 gap-4 md:gap-8">
                         <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold text-center dark:text-white">¿Que quieres ver hoy?</h2>
                         <div className='flex border-2 border-gray-800 dark:bg-white rounded-3xl items-center justify-between py-0 px-2 w-full md:w-[425px] lg:w-[550px]'>
-                            <input onChange={handleSearch} value={find} type='text' className='outline-none border-none rounded-l-3xl w-11/12 px-2 py-1' placeholder='Buscar en News App'></input>
+                            <input onChange={handleSearch} value={find} type='text' className='outline-none border-none rounded-l-3xl w-11/12 px-2 py-1' placeholder={`Buscar en ${source}`}></input>
                             <button onClick={() => getData(find)} className='py-2 px-3'>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23" fill="currentColor" className="size-5 sm:size-6">
                                     <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
